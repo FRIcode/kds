@@ -1,0 +1,36 @@
+server:
+  host: "0.0.0.0:8000"
+logging:
+  level: "info"
+deployments:
+- name: "none"
+  workdir: "."
+  auth:
+    type: "none"
+    opts: {}
+  env:
+  - name: "ENV"
+    value: "test"
+  script:
+  - "pwd"
+  - "echo $ENV"
+- name: "apikey"
+  workdir: "."
+  auth:
+    type: "apikey"
+    opts:
+      apikey: "test"
+  env: []
+  script:
+  - "pwd"
+- name: "jwt"
+  workdir: "."
+  auth:
+    type: "jwt"
+    opts:
+      jwks: "https://gitlab.example.com/oauth/discovery/keys"
+      aud: "deploy.example.com"
+      expr: "token.username == '34'"
+  env: []
+  script:
+  - "pwd"

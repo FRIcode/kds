@@ -1,0 +1,15 @@
+[Unit]
+Description=KDS
+After=network.target
+
+[Service]
+ExecStart=/opt/kds/kds
+Environment="CONFIG=/opt/kds/config.yml"
+User=root
+WorkingDirectory=/
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=1min
+
+[Install]
+WantedBy=multi-user.target

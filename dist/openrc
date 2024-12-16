@@ -1,0 +1,23 @@
+#!/sbin/openrc-run
+
+description="KDS"
+
+cfgfile=/opt/kds/config.yml
+pidfile=/run/kds/kds.pid
+stdoutlogfile=/var/log/kds-stdout.log
+stderrlogfile=/var/log/kds-stderr.log
+
+command="/opt/kds/kds"
+command_args="--config $cfgfile"
+required_files="$cfgfile"
+start_stop_daemon_args="-1 $stdoutlogfile -2 $stderrlogfile"
+command_background="yes"
+
+depend() {
+	need net
+}
+
+start_pre() {
+	checkpath --directory --owner root:root ${pidfile%/*}
+	checkpath --file $cfgfile
+}
