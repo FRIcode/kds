@@ -28,6 +28,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: kds-$GOOS-$GOARCH
+          path: kds-$GOOS-$GOARCH
           retention-days: 1
 
   release:
