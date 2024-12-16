@@ -6,5 +6,18 @@ on:
       - main
 
 jobs:
-  osv_scan:
-    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v1.9.1"
+  scan:
+    runs-on: alpine
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Download wget
+        run: |
+          apk add --no-cache wget
+      - name: Download OSV scanner
+        run: |
+          wget https://github.com/google/osv-scanner/releases/download/v1.9.1/osv-scanner_linux_amd64 -O osv-scanner
+          chmod +x osv-scanner
+      - name: OSV Scan
+        run: |
+          ./osv-scanner .
