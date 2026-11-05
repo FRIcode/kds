@@ -2,22 +2,22 @@
 
 description="KDS"
 
-cfgfile=/opt/kds/config.yml
-pidfile=/run/kds/kds.pid
-stdoutlogfile=/var/log/kds-stdout.log
-stderrlogfile=/var/log/kds-stderr.log
-
 command="/opt/kds/kds"
-command_args="--config $cfgfile"
-required_files="$cfgfile"
-start_stop_daemon_args="-1 $stdoutlogfile -2 $stderrlogfile"
+command_args="--config /opt/kds/config.yml"
+command_user="www-data"
 command_background="yes"
 
+directory="/opt/kds/"
+pidfile="/run/kds.pid"
+
+output_log="/var/log/kds.log"
+error_log="/var/log/kds.err"
+
 depend() {
-	need net
+    need networking
 }
 
 start_pre() {
-	checkpath --directory --owner root:root ${pidfile%/*}
-	checkpath --file $cfgfile
+    checkpath --directory --owner root:root ${pidfile%/*}
+    checkpath --file /opt/kds/config.yml
 }
